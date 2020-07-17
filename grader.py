@@ -17,5 +17,5 @@ print("thank you " + name)
 assignment_name = raw_input("What is the name of your assignment?")
 grade = raw_input("What is your number grade on " + assignment_name + "?")
 
-letter_grade = Grader.grade_item(int(grade))
+letter_grade = Grader.grade_item(float(grade))
 print(name + ", you received a(n) " + letter_grade + " on " + assignment_name )

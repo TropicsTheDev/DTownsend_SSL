@@ -20,6 +20,6 @@ assignmentName = gets
 puts "What number grade did you get on " + assignmentName
 grade = gets
 
-letterGrade = Grader.gradeItem(grade.to_i)
+letterGrade = Grader.gradeItem(grade.to_f)
 puts name + ", you got a(n) + " + letterGrade + " on " + assignmentName
 
