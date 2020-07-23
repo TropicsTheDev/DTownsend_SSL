@@ -1,0 +1,47 @@
+<div
+  style="
+    z-index: 12;
+    display: block;
+    text-align: right;
+    background-color: #333a40;
+    margin-right: 0px;
+    padding-right: 20px;
+    color: gray;
+    position: absolute;
+    width: 155px;
+    margin-top: 200px;
+    padding-top: 5px;
+    right: 0px;
+    border-radius: 10px;
+    padding: 11px;
+    font-size: 12px;
+  "
+>
+  <form action="/register" method="POST">
+    <label>First Name</label
+    ><input type="text" name="firstName" placeholder="First" />
+    <label>Last Name</label
+    ><input type="text" name="lastName" placeholder="Last" /> <label>City</label
+    ><input type="text" name="city" placeholder="City" /> <label>State</label
+    ><input type="text" name="state" placeholder="password" /> <label>Zip</label
+    ><input type="text" name="zip" placeholder="Zip" /> <label>Age</label
+    ><select>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21+">21+</option>
+    </select>
+    <fieldset>
+      <label>Male</label
+      ><input type="radio" name="gender" placeholder="Male" value="male" />
+      <label>Female</label
+      ><input type="radio" name="gender" placeholder="Female" value="female" />
+    </fieldset>
+    <label>Consent</label
+    ><input type="checkbox" name="consent" placeholder="Consent" />
+    <br/><label>Bio</label><textarea name="bio" placeholder="bio"></textarea>
+    <input type="submit" />
+  </form>
+</div>

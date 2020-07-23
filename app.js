@@ -57,6 +57,47 @@ router.post("/login", (req, res) => {
   res.render("index", { pagename: "Home", errors: errors });
 });
 
+router.post("/register", (req, res) => {
+    const errors = [];
+    const data = req.body;
+    console.log(data);
+
+    //validations
+    if(data.firstName == ""){
+        errors.push("First name required");
+    }
+    if(data.lastName == ""){
+        errors.push("Last name required");
+    }
+    if(data.city == ""){
+        errors.push("City required");
+    }
+    if(data.state == ""){
+        errors.push("State Required");
+    }
+    if(data.zip == ""){
+        errors.push("Zip required");
+    }
+    if(typeof(data.age) == "undefined"){
+        errors.push("Age Required")
+    }
+    if(typeof(data.gender) == "undefined"){
+        errors.push("Gender required");
+    }
+    if(typeof(data.consent == "undefined")){
+        errors.push("Consent required");
+    }
+    if(data.bio == ""){
+        errors.push("Bio required");
+    }
+
+    for(error in errors){
+        console.error(errors[error]);
+    }
+
+    res.render("index", { pagename: "Home", errors: errors });
+});
+
 app.use(express.static("public"));
 app.use("/", router);
 const server = app.listen("8080");
