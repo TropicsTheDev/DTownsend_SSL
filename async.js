@@ -1,9 +1,9 @@
-var http = require('http'); //required htt"p"
+var http = require('http'); //1. required htt"p"
 const { data } = require('jquery');
-var myname = function(){   //funct"i"on
-  return "Here is my IP address";//use return to set the value of the valueB
+var myname = function(){   //2. funct"i"on
+  return "Here is my IP address";//3. use return to set the value of the valueB
 };
-async function callHttpbin() { //name is httpbi"n" //needs to be marked async to use await
+async function callHttpbin() { //4. name is httpbi"n" //5. needs to be marked async to use await
   let promise = new Promise((resolve, reject) => {
     http.get(
      'http://httpbin.org/ip',
@@ -17,7 +17,7 @@ async function callHttpbin() { //name is httpbi"n" //needs to be marked async to
      response.on('end', function() {
       var result = JSON.parse(str);
       myips = result.origin;
-      resolve(myips); //resolve the ip as it comes in
+      resolve(myips); // 6.resolve the ip as it comes in
      });
      }
     );
@@ -26,11 +26,11 @@ async function callHttpbin() { //name is httpbi"n" //needs to be marked async to
 let result = await promise;
 //console.log("promise", promise);
 //console.log("result", result);
- return result; //needs to do something with result
+ return result; //7. needs to do something with result
 }
-( async function executeAsyncTask(){ //needs to be async to use await
+( async function executeAsyncTask(){ // 8. needs to be async to use await
   const valueA =  await callHttpbin();
   const valueB = myname();
   console.log(valueB+": "+valueA)
 
-} ());//close function  //tell function to self execute (or you could call it)
+} ());// 9. close function  // 10. tell function to self execute (or you could call it)
