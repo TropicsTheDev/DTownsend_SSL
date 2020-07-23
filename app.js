@@ -52,52 +52,70 @@ router.post("/login", (req, res) => {
     errors.push("Password is not valid");
   } //fits password conditions
 
-  console.log(errors.length)
+  console.log(errors.length);
 
   res.render("index", { pagename: "Home", errors: errors });
 });
 
 router.post("/register", (req, res) => {
-    const errors = [];
-    const data = req.body;
-    //console.log(data.age);
+  const errors = [];
+  const data = req.body;
+  //console.log(data.age);
 
-    //validations
-    if(data.firstName == ""){
-        errors.push("First name required");
-    }
-    if(data.lastName == ""){
-        errors.push("Last name required");
-    }
-    if(data.city == ""){
-        errors.push("City required");
-    }
-    if(data.state == ""){
-        errors.push("State Required");
-    }
-    if(data.zip == ""){
-        errors.push("Zip required");
-    }
-    if(!data.age){
-        errors.push("Age Required")
-    }
-    if(typeof(data.gender) == "undefined"){
-        errors.push("Gender required");
-    }
-    if(typeof(data.consent) == "undefined"){
-        errors.push("Consent required");
-    }
-    if(data.bio == ""){
-        errors.push("Bio required");
-    }
+  //validations
+  if (data.firstName == "") {
+    errors.push("First name required");
+  }
+  if (!/^[A-Za-z]+$/.test(data.firstName)) {
+    errors.push("First name may only use alphabetic characters");
+  }
+  if (data.lastName == "") {
+    errors.push("Last name required");
+  }
+  if (!/^[A-Za-z]+$/.test(data.lastName)) {
+    errors.push("Last name may only use alphabetic characters");
+  }
+  if (data.city == "") {
+    errors.push("City required");
+  }
+  if (!/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/.test(data.city)) {
+    errors.push("City may only use alphabetic characters");
+  }
+  if (data.state == "") {
+    errors.push("State Required");
+  }
+  if (!/^[A-Za-z]+$/.test(data.firstName)) {
+    errors.push("State may only use alphabetic characters");
+  }
+  if (data.zip == "") {
+    errors.push("Zip required");
+  }
+  if (!/^\d{5}$|^\d{5}-\d{4}$/.test(data.zip)) {
+    errors.push("Please enter valid zip");
+  }
+  if (!data.age) {
+    errors.push("Age Required");
+  }
+  if (!/^[0-9]*$/.test(data.age)) {
+    errors.push("Must select a numeric age");
+  }
+  if (typeof data.gender == "undefined") {
+    errors.push("Gender required");
+  }
+  if (typeof data.consent == "undefined") {
+    errors.push("Consent required");
+  }
+  if (data.bio == "") {
+    errors.push("Bio required");
+  }
 
-    for(error in errors){
-        console.error(errors[error]);
-    }
-    if(errors.length == 0 ){
-        console.log("You have successfully logged in!")
-    }
-    res.render("index", { pagename: "Home", errors: errors });
+  for (error in errors) {
+    console.error(errors[error]);
+  }
+  if (errors.length == 0) {
+    console.log("You have successfully logged in!");
+  }
+  res.render("index", { pagename: "Home", errors: errors });
 });
 
 app.use(express.static("public"));
