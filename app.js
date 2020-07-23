@@ -60,7 +60,7 @@ router.post("/login", (req, res) => {
 router.post("/register", (req, res) => {
     const errors = [];
     const data = req.body;
-    console.log(data);
+    //console.log(data.age);
 
     //validations
     if(data.firstName == ""){
@@ -78,13 +78,13 @@ router.post("/register", (req, res) => {
     if(data.zip == ""){
         errors.push("Zip required");
     }
-    if(typeof(data.age) == "undefined"){
+    if(!data.age){
         errors.push("Age Required")
     }
     if(typeof(data.gender) == "undefined"){
         errors.push("Gender required");
     }
-    if(typeof(data.consent == "undefined")){
+    if(typeof(data.consent) == "undefined"){
         errors.push("Consent required");
     }
     if(data.bio == ""){
@@ -94,7 +94,9 @@ router.post("/register", (req, res) => {
     for(error in errors){
         console.error(errors[error]);
     }
-
+    if(errors.length == 0 ){
+        console.log("You have successfully logged in!")
+    }
     res.render("index", { pagename: "Home", errors: errors });
 });
 
