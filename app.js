@@ -6,6 +6,7 @@ const url = require("url");
 const express = require("express");
 const request = require("request");
 const bodyParser = require("body-parser");
+const session = require("express-session");
 
 const ejs = require("ejs");
 const router = express.Router();
@@ -15,18 +16,42 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.engine("ejs", require("ejs").__express);
+app.use(session({ secret: "secret", saveUninitialized: true, resave: true }));
+
+var sess;
 
 router.get("/", (req, res) => {
+  sess = req.session;
   res.render("index", { pagename: "Home" });
 });
 router.get("/about", (req, res) => {
+  sess = req.session;
   res.render("about", { pagename: "About" });
 });
 router.get("/contact", (req, res) => {
+  sess = req.session;
   res.render("contact", { pagename: "Contact" });
 });
 router.get("/post", (req, res) => {
+  sess = req.session;
   res.render("post", { pagename: "Post" });
+});
+
+router.get("/profile", (req, res) => {
+  sess = req.session;
+  if (typeof sess == "undefined" || sess.loggedin != true) {
+    let errors = ["Not an authenticated user"];
+    res.render("index", { pagename: "Home", errors: errors });
+  } else {
+    res.render("profile", { pagename: "Profile", sess: sess });
+  }
+});
+
+router.get("/logout", (req, res) => {
+  sess = req.session;
+  sess.destroy((err) => {
+    res.redirect("/");
+  });
 });
 
 router.post("/login", (req, res) => {
@@ -45,16 +70,29 @@ router.post("/login", (req, res) => {
     errors.push("Email is not valid");
   } //is an email address
   if (
-    !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(
+    !/^[a-z0-9]+$/.test(
       req.body.password
     )
   ) {
     errors.push("Password is not valid");
   } //fits password conditions
 
-  console.log(errors.length);
-
-  res.render("index", { pagename: "Home", errors: errors });
+  //write conditional here. Show profile page on pass. Index w/errors on fail
+  //email: mike@aol.com password: abc123
+  sess = req.session;
+  
+  const user = "Mike@aol.com";
+  const pass = "abc123";
+  console.log(req.body.password);
+  if (req.body.email != user || req.body.password != pass) {
+    errors.push("Invalid email and password");
+  }
+  if (errors.length == 0) {
+    sess.loggedin = true;
+    res.render("profile", { pagename: "Profile", sess: sess });
+  } else {
+    res.render("index", { pagename: "Home", errors: errors });
+  }
 });
 
 router.post("/register", (req, res) => {
